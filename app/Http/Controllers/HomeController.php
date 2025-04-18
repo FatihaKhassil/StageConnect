@@ -10,6 +10,13 @@ use App\Models\User;
 
 class HomeController extends Controller
 {
+
+    public function index(){
+        return view('home.userpage');
+    }
+
+
+
     public function redirect()
     {
         $role=Auth::user()->role;
@@ -25,7 +32,7 @@ class HomeController extends Controller
         }
         else//etudiant
         {
-            return view('dashboard');
+            return view('home.userpage');
         }
 
 
