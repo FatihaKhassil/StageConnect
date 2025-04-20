@@ -16,3 +16,6 @@ Route::middleware([
     })->name('dashboard');
 });
 route::get('/redirect',[HomeController::class,'redirect']);
+Route::get('/test', function () {
+    return 'OK Laravel';
+});

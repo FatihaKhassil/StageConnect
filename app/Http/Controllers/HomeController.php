@@ -15,15 +15,13 @@ class HomeController extends Controller
         return view('home.userpage');
     }
 
-
-
     public function redirect()
     {
         $role=Auth::user()->role;
         
         if($role=='entreprise')
         {
-            return view('entreprise.home');
+            return view('dashboard');
         }
 
         elseif($role=='admin')
