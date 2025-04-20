@@ -1,9 +1,18 @@
-<x-app-layout>
-
-</x-app-layout>
 <!DOCTYPE html>
-<html>
-   <head>
-      <h1>Admin</h1>
-   </head>
+<html lang="en">
+  <head>
+   @include('admin.css')
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
+      @include('admin.sidebar')
+      <!-- partial -->
+      @include('admin.navbar')
+        <!-- partial -->
+        @include('admin.body')
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    @include('admin.script')
+  </body>
 </html>
