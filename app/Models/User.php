@@ -19,6 +19,17 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    // Définir les constantes de rôle
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_ENTREPRISE = 'entreprise';
+    public const ROLE_ETUDIANT = 'etudiant';
+
+    // Liste des rôles disponibles pour les selects
+    public static $roles = [
+        self::ROLE_ADMIN => 'Administrateur',
+        self::ROLE_ENTREPRISE => 'Entreprise',
+        self::ROLE_ETUDIANT => 'Étudiant',
+    ];
 
     /**
      * The attributes that are mass assignable.
