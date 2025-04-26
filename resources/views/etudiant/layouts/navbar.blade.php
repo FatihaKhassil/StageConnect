@@ -11,7 +11,7 @@
         <ul class="navbar-nav w-100">
           <li class="nav-item w-100">
             <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-              <input type="text" class="form-control" placeholder="rechercher un utilisateur..." style="background-color: white; color: #333;">
+              <input type="text" class="form-control" placeholder="Rechercher une offre......" style="background-color: white; color: #333;">
             </form>
           </li>
         </ul>

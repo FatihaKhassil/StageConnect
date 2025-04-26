@@ -15,10 +15,11 @@
               <span class="count bg-success"></span>
             </div>
             <div class="profile-name">
-              <h5 class="mb-0 font-weight-normal text-black">{{ $user->nom }}</h5>
-              <span>{{ ucfirst(auth()->user()->role)}}</span>
+                <h5 class="mb-0 font-weight-normal text-black">{{ $user->nom }}</h5>
+                <span>{{ ucfirst($user->role) }}</span>
+            </div>
+            
           </div>
-        </div>
       </li>
       <li class="nav-item nav-category">
         <span class="nav-link">Navigation</span>
@@ -36,38 +37,14 @@
           <span class="menu-icon">
             <i class="mdi mdi-laptop"></i>
           </span>
-          <span class="menu-title">Offres</span>
+          <span class="menu-title">Suivi des candidatures</span>
           <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Offres en attende</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Offres valides</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Offres non valides</a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="{{ route('admin.users.index') }}">
-          <span class="menu-icon">
-            <i class="mdi mdi-playlist-play"></i>
-          </span>
-          <span class="menu-title">Utilisateurs</span>
-        </a>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-          <span class="menu-icon">
-            <i class="mdi mdi-table-large"></i>
-          </span>
-          <span class="menu-title">Entreprises</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="auth">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html">Entreprises en attende </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html">Entreprises valides </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html">Entreprises non valides </a></li>
+            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Candidatures en attende</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Candidatures acceptées</a></li>
+            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Candidatures refusées</a></li>
           </ul>
         </div>
       </li>

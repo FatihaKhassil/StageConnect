@@ -1,7 +1,12 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <div class="flex flex-col items-center" style="gap: 4px;">
+                <img src="{{ asset('photo/LOGO.png') }}" alt="Votre Logo" style="width: 2cm; height: 2cm;" />
+                <h1 style="font-size: 25px; margin: 0; font-weight: bold; line-height: 1;">
+                    <span style="color: #111;">Stage</span><span style="color: rgb(196, 110, 236);">Connect</span>
+                </h1>
+            </div>
         </x-slot>
 
         <x-validation-errors class="mb-4" />
@@ -22,7 +27,7 @@
             <div class="mt-4">
                 <x-label for="role" value="{{ __('Vous êtes :') }}" />
                 <select id="role" name="role" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                    <option value="">-- Sélectionnez un rôle --</option>
+                    <option value="">-- Sélectionnez votre rôle --</option>
                     <option value="entreprise">Entreprise</option>
                     <option value="etudiant">Étudiant(e)</option>
                 </select>

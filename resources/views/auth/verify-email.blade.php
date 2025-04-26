@@ -1,8 +1,14 @@
 <x-guest-layout>
     <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+        <x-authentication-card>
+            <x-slot name="logo">
+                <div class="flex flex-col items-center" style="gap: 4px;">
+                    <img src="{{ asset('photo/LOGO.png') }}" alt="Votre Logo" style="width: 2cm; height: 2cm;" />
+                    <h1 style="font-size: 25px; margin: 0; font-weight: bold; line-height: 1;">
+                        <span style="color: #111;">Stage</span><span style="color: rgb(196, 110, 236);">Connect</span>
+                    </h1>
+                </div>
+            </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
             {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}

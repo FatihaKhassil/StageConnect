@@ -18,8 +18,8 @@ Route::middleware([
 });
 route::get('/redirect',[HomeController::class,'redirect']);
 route::get('/admin_users',[AdminController::class,'index'])->name('admin.users.index');
-//Route::put('/admin_users/update', [AdminController::class, 'update'])->name('admin.users.update');
-Route::patch('/admin_users/{user}/toggle-block', [AdminController::class, 'toggleBlock'])->name('admin.users.toggle-block');
-Route::patch('/admin_users/{user}/destroy', [AdminController::class, 'destroy'])->name('admin.users.destroy');
-Route::resource('users', AdminController::class)->except(['create', 'store']);
-
+route::get('/admin_users_edit',[AdminController::class,'edit'])->name('admin.users.edit');
+route::put('/admin_users_update',[AdminController::class,'update'])->name('admin.users.update');
+route::post('/admin_users_store',[AdminController::class,'store'])->name('admin.users.store');
+route::get('/admin_users_create',[AdminController::class,'create'])->name('admin.users.create');
+Route::get('/admin_users_destroy/{id}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
