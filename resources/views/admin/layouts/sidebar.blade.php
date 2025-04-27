@@ -48,9 +48,9 @@
         </div>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="{{ route('admin.users.index') }}">
+        <a class="nav-link" href="{{ route('admin.users.index') }}" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-icon">
-            <i class="mdi mdi-playlist-play"></i>
+            <i class="mdi mdi-speedometer"></i>
           </span>
           <span class="menu-title">Utilisateurs</span>
         </a>
@@ -65,9 +65,9 @@
         </a>
         <div class="collapse" id="auth">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html">Entreprises en attende </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html">Entreprises valides </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html">Entreprises non valides </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('admin.entreprises.en_attente')}}">Entreprises en attente </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('admin.entreprises.validees')}}">Entreprises valides </a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('admin.entreprises.rejetees')}}">Entreprises rejetes </a></li>
           </ul>
         </div>
       </li>

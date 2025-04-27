@@ -64,4 +64,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public static function countEtudiants()
+    {
+        return self::where('role', 'etudiant')->count();
+    }
+
+    public static function countEntreprisesValidees()
+    {
+        return self::where('role', 'entreprise')->where('is_valid', true)->count();
+    }
+
+    public static function countEntreprisesEnAttente()
+    {
+        return self::where('role', 'entreprise')->where('is_valid', false)->count();
+    }
 }

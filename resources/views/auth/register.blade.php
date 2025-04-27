@@ -32,6 +32,30 @@
                     <option value="etudiant">Étudiant(e)</option>
                 </select>
             </div>
+            <div id="entreprise-name-field" class="mt-4 hidden">
+                <x-label for="nom_entreprise" value="{{ __('Entreprise :') }}" />
+                <x-input id="nom_entreprise" class="block mt-1 w-full" type="text" name="nom_entreprise" :value="old('nom_entreprise')" />
+            </div>
+            <div id="entreprise-adresse-field" class="mt-4 hidden">
+                <x-label for="adresse" value="{{ __('Adresse :') }}" />
+                <x-input id="adresse" class="block mt-1 w-full" type="text" name="adresse" :value="old('adresse')" />
+            </div>
+            <div id="secteur-field" class="mt-4 hidden">
+                <x-label for="secteur" value="{{ __('Secteur :') }}" />
+                <select id="secteur" name="secteur" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">>
+                    <option value="">-- Sélectionner un secteur --</option>
+                    <option value="Informatique">Informatique</option>
+                    <option value="Banque">Banque</option>
+                    <option value="Santé">Santé</option>
+                    <option value="Éducation">Éducation</option>
+                    <option value="Industrie">Industrie</option>
+                    <option value="Autre">Autre</option>
+                </select>
+            </div>
+            
+            
+        
+            
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Mot de passe :') }}" />
@@ -70,5 +94,44 @@
                 </x-button>
             </div>
         </form>
+        <!-- Champ Nom Entreprise -->
+<div id="entreprise-name-field" class="mt-4 hidden">
+    <x-label for="nom_entreprise" value="{{ __('Entreprise :') }}" />
+    <x-input id="nom_entreprise" class="block mt-1 w-full" type="text" name="nom_entreprise" :value="old('nom_entreprise')" />
+</div>
+
+<!-- Champ Adresse Entreprise -->
+<div id="entreprise-adresse-field" class="mt-4 hidden">
+    <x-label for="adresse" value="{{ __('Adresse de l\'entreprise :') }}" />
+    <x-input id="adresse" class="block mt-1 w-full" type="text" name="adresse" :value="old('adresse')" />
+</div>
+
+<!-- Script pour afficher/cacher les champs -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const roleSelect = document.getElementById('role');
+    const entrepriseNameField = document.getElementById('entreprise-name-field');
+    const entrepriseAdresseField = document.getElementById('entreprise-adresse-field');
+    const secteurField = document.getElementById('secteur-field');  // Utilise secteur-field ici
+
+    function toggleEntrepriseFields() {
+        if (roleSelect.value === 'entreprise') {
+            entrepriseNameField.classList.remove('hidden');
+            entrepriseAdresseField.classList.remove('hidden');
+            secteurField.classList.remove('hidden');  // Affiche le secteur
+        } else {
+            entrepriseNameField.classList.add('hidden');
+            entrepriseAdresseField.classList.add('hidden');
+            secteurField.classList.add('hidden');  // Cache le secteur
+        }
+    }
+
+    roleSelect.addEventListener('change', toggleEntrepriseFields);
+    // pour gérer le cas où la page recharge (ex : erreur validation)
+    toggleEntrepriseFields();
+});
+
+</script>
     </x-authentication-card>
 </x-guest-layout>
+

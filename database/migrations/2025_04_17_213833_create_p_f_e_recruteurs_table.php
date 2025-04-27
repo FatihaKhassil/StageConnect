@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('utilisateur_id')->constrained('users')->onDelete('cascade');
             $table->string('nom_entreprise');
+            $table->string('statut')->default('en_attente');
             $table->string('adresse');
             $table->string('secteur');
             $table->timestamps();

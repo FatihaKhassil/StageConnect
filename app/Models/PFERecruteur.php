@@ -18,7 +18,7 @@ class PFERecruteur extends Model
         'secteur',
     ];
 
-    public function utilisateur()
+    public function user()
     {
         return $this->belongsTo(User::class, 'utilisateur_id');
     }

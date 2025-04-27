@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Validation\Rule;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -18,20 +19,22 @@ class CreateNewUser implements CreatesNewUsers
      * @param  array<string, string>  $input
      */
     public function create(array $input): User
-    {
-        Validator::make($input, [
-            'nom' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'role' => ['required'],
-            'password' => $this->passwordRules(),
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
-        ])->validate();
+{
+    Validator::make($input, [
+        'nom' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => $this->passwordRules(),
+        'role' => ['required', Rule::in(['entreprise', 'etudiant', 'admin'])],
+    ])->validate();
 
-        return User::create([
-            'nom' => $input['nom'],
-            'email' => $input['email'],
-            'role' => $input['role'],
-            'password' => Hash::make($input['password']),
-        ]);
-    }
+    // Création de l'utilisateur sans les champs supplémentaires
+    return User::create([
+        'nom' => $input['nom'],
+        'email' => $input['email'],
+        'role' => $input['role'],
+        'password' => Hash::make($input['password']),
+    ]);
+}
+
+
 }

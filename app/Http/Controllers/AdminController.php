@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User; 
+use App\Models\PFERecruteur; 
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -43,7 +44,51 @@ class AdminController extends Controller
             return redirect('/login')->with('error', 'Veuillez vous connecter');
         }
     }
+    public function en_attente()
+{
+    $query = PFERecruteur::where('statut', 'en_attente')->with('user');
 
+    if (request('search')) {
+        $query->whereHas('user', function($q) {
+            $q->where('name', 'like', '%' . request('search') . '%');
+        });
+    }
+
+    $en_attente = $query->get();
+    $user = Auth::user();
+    return view('admin.entreprises.en_attente', compact('en_attente', 'user'));
+}
+  
+    public function entreprisesValidees()
+    {
+        $valides = PFERecruteur::where('statut', 'valide')->with('user')->get();
+        $user = Auth::user();
+        return view('admin.entreprises.validees', compact('valides', 'user'));
+    }
+    
+    public function entreprisesRejetees(Request $request)
+    {
+        $query = PFERecruteur::where('statut', 'rejete')->with('user'); // On charge la relation user
+    
+        if ($request->has('search') && $request->search != '') {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('nom', 'like', '%' . $request->search . '%');
+            });
+        }
+    
+        $rejetes = $query->get();
+    
+        // Vérifie si la recherche a donné des résultats
+        $noResults = $rejetes->isEmpty() && $request->has('search');
+    
+        // Récupère l'utilisateur connecté
+        $user = Auth::user();  // On récupère l'utilisateur authentifié
+    
+        return view('admin.entreprises.rejetees', compact('rejetes', 'noResults', 'user'));  // On passe 'user' à la vue
+    }
+    
+
+    
     public function store(Request $request)
     {
         $validated = $request->validate([
