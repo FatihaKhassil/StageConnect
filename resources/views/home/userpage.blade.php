@@ -10,16 +10,19 @@
       <meta name="keywords" content="" />
       <meta name="description" content="" />
       <meta name="author" content="" />
-      <link rel="shortcut icon" href="photo/LOGO.png" type="">
+      <link rel="shortcut icon" href="photo/LOGO.png" class="logo-icon" type="">
       <title>StageConnect</title>
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
       <!-- font awesome style -->
+      <link rel="stylesheet" href="style1.css">
       <link href="home/css/font-awesome.min.css" rel="stylesheet" />
       <!-- Custom styles for this template -->
       <link href="home/css/style.css" rel="stylesheet" />
       <!-- responsive style -->
       <link href="home/css/responsive.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
    </head>
    <body>
       <div class="">
@@ -30,14 +33,10 @@
          @include('home.slider')
          <!-- end slider section -->
       </div>
-      <div class="cpy_">
-         <p class="mx-auto">© 2025 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
-         
-            Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-         
-         </p>
-      </div>
+
+       
       <!-- jQery -->
+      
       <script src="home/js/jquery-3.4.1.min.js"></script>
       <!-- popper js -->
       <script src="home/js/popper.min.js"></script>
