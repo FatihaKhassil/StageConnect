@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OffrePFE;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User; 
@@ -44,6 +45,7 @@ class AdminController extends Controller
             return redirect('/login')->with('error', 'Veuillez vous connecter');
         }
     }
+    //les entreprises en attede de validation
     public function en_attente()
 {
     $query = PFERecruteur::where('statut', 'en_attente')->with('user');
@@ -58,14 +60,14 @@ class AdminController extends Controller
     $user = Auth::user();
     return view('admin.entreprises.en_attente', compact('en_attente', 'user'));
 }
-  
+  //liste des entreprises validees
     public function entreprisesValidees()
     {
         $valides = PFERecruteur::where('statut', 'valide')->with('user')->get();
         $user = Auth::user();
         return view('admin.entreprises.validees', compact('valides', 'user'));
     }
-    
+    //listes des entreprises rejetees
     public function entreprisesRejetees(Request $request)
     {
         $query = PFERecruteur::where('statut', 'rejete')->with('user'); // On charge la relation user
@@ -108,42 +110,76 @@ class AdminController extends Controller
         return redirect()->route('admin.users.index')
                          ->with('success', 'Utilisateur créé avec succès');
     }
+    //modifier les infos d un utilisateur
+    public function edit($id)
+     {
+    $user = User::findOrFail($id);
+    return view('admin.users.edit', compact('user'));
+     }
 
-    public function edit(User $user) // Utilisation de Route Model Binding
+    public function update(Request $request, $id)
     {
-        return view('admin.users.edit', compact('user'));
+    $user = User::findOrFail($id);
+
+    $request->validate([
+        'nom' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'role' => 'required|in:etudiant,entreprise',
+        'password' => 'nullable|min:6|confirmed',
+    ]);
+
+    $user->nom = $request->nom;
+    $user->email = $request->email;
+    $user->role = $request->role;
+
+    if ($request->filled('password')) {
+        $user->password = bcrypt($request->password);
     }
 
-    public function update(Request $request, User $user)
-    {
-        $validated = $request->validate([
-            'nom' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
-            'password' => 'nullable|string|confirmed|min:8', // Mot de passe optionnel
-            'role' => 'required|in:entreprise,etudiant,admin',
-        ]);
+    $user->save();
 
-        $updateData = [
-            'nom' => $validated['nom'],
-            'email' => $validated['email'],
-            'role' => $validated['role'],
-        ];
-
-        if (!empty($validated['password'])) {
-            $updateData['password'] = Hash::make($validated['password']);
-        }
-
-        $user->update($updateData);
-
-        return redirect()->route('admin.users.index')
-                         ->with('success', 'Utilisateur mis à jour avec succès');
+    return redirect()->route('admin.users.index')->with('success', 'Utilisateur mis à jour avec succès.');
     }
-
     public function destroy(User $user) // Utilisation de Route Model Binding
     {
         $user->delete();
         
         return redirect()->route('admin.users.index')
                          ->with('success', 'Utilisateur supprimé avec succès');
+    }
+    //les offres qui sont en attente de validation par l admin
+    public function enAttende()
+    {
+        $user = Auth::user();
+        $offres = OffrePFE::where('statut','attente')->paginate(10);
+        return view('admin.offres.en_attente', compact('offres','user'));
+
+    }
+    //les offres qui ont ete validees par l admin
+     public function offresValides()
+    {
+        $user = Auth::user();
+        $offres = OffrePFE::where('statut','validee')->paginate(10);
+        return view('admin.offres.validees', compact('offres','user'));
+        
+    }
+    //les offres qui ont ete rejetees par l admin
+     public function offresNonValides()
+    {
+        $user = Auth::user();
+        $offres = OffrePFE::where('statut','rejetee')->paginate(10);
+        return view('admin.offres.rejetees', compact('offres','user'));
+        
+    }
+    //les actions d admin a savoir la validation et la non validation
+    public function valider(OffrePFE $offre)
+    {
+        $offre->update(['statut'=>'validee']);
+        return back()->with('success','Offre validée avec succès');
+    }
+    public function rejeter(OffrePFE $offre)
+    {
+        $offre->update(['statut'=>'rejetee']);
+        return back()->with('success','Offre rejetée avec succès');
     }
 }

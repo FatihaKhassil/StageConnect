@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Stage Connect</title>
   <script src="Style.js"></script>
-  <link rel="stylesheet" href="styles.css"> <!-- Ton fichier CSS ici -->
+  <link rel="stylesheet" href="style.css"> <!-- Ton fichier CSS ici -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,13 +46,13 @@
     <div>
       
       <form class="contact-form" action="#" method="post">
-        <h2>Contactez-moi</h2>
+        <h1>Contactez-nous</h1>
     
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <input type="email" id="email"  name="email" placeholder="Entrer votre email" required>
     
-        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        <input type="text" id="name" name="name" placeholder="Entrer votre nom" required>
     
-        <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+        <textarea id="message" name="message" rows="5" placeholder=" votre message..." required></textarea>
     
         <button type="submit">Envoyer</button>
       </form>
@@ -67,45 +67,43 @@
             <div class="col-2">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Categories</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Services</a></li>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Contact</a></li>
+                    <li><a href="">Services</a></li>
                 </ul>
             </div>
             <div class="col-3">
                 <h3>Services</h3>
                 <ul>
-                    <li><a href="#">HTML</a></li>
-                    <li><a href="#">CSS</a></li>
-                    <li><a href="#">JavaScript</a></li>
-                    <li><a href="#">React</a></li>
-                    <li><a href="#">Python</a></li>
-                    <li><a href="#">C++</a></li>
+                    <li><a >Smart Internship Matching</a></li>
+                    <li><a >AI Profile Optimization</a></li>
+                    <li><a >Candidate Management Hub</a></li>
+                    <li><a >Advanced Analytics Dashboard</a></li>
+                    <li><a >Talent-Opportunity Connect</a></li>
                 </ul>
             </div>
             <h2 class="titlefooter">StageConnect</h2>
             <p class="stage-info">
-              Lors de mon stage, j’ai travaillé sur des projets concrets<br>
-              qui ont renforcé mes compétences techniques<br>
-              et m’ont intégré dans un cadre professionnel.<br>
-              J’ai utilisé des outils modernes pour relever des défis réels.
+              Your Gateway to Professional Excellence<br>
+              A platform connecting students with businesses<br>
+              for high-quality internships.<br>
+              Streamline your search, posting, and management <br>
+              of internship opportunities with maximum efficiency.
             </p>
             <div class="col-4">
                 <h3>Newsletter</h3>
                 
                 <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-twitter"></i></a>
+                    <a href=""><i class="fab fa-instagram"></i></a>
+                    <a href=""><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-2">
-            <p>© 2025 | StageConnect</p>
+            <p>© 2025 StageConnect | All Rights Reserved</p>
         </div>
     </footer>
   

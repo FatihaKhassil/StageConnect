@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('specialite');
             $table->string('lieu');
             $table->integer('duree');
+            $table->string('statut_offre');
             $table->timestamps();
         });
     }

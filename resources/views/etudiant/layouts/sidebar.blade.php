@@ -17,15 +17,14 @@
             <div class="profile-name">
                 <h5 class="mb-0 font-weight-normal text-black">{{ $user->nom }}</h5>
                 <span>{{ ucfirst($user->role) }}</span>
-            </div>
-            
+            </div> 
           </div>
       </li>
       <li class="nav-item nav-category">
         <span class="nav-link">Navigation</span>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{route('etudiant.index')}}">
           <span class="menu-icon">
             <i class="mdi mdi-speedometer"></i>
           </span>
@@ -33,20 +32,12 @@
         </a>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-          <span class="menu-icon">
-            <i class="mdi mdi-laptop"></i>
-          </span>
-          <span class="menu-title">Suivi des candidatures</span>
-          <i class="menu-arrow"></i>
+        <a class="nav-link" href="{{ route('mes-candidatures') }}">
+            <span class="menu-icon">
+                <i class="mdi mdi-laptop"></i>
+            </span>
+            <span class="menu-title">Mes candidatures</span>
         </a>
-        <div class="collapse" id="ui-basic">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Candidatures en attende</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Candidatures acceptées</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Candidatures refusées</a></li>
-          </ul>
-        </div>
-      </li>
+    </li>    
     </ul>
   </nav>

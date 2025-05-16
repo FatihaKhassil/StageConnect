@@ -20,10 +20,19 @@
         <a class="btn btn-success buttoninscription" href="{{ route('register') }}">S'inscrire</a>
     @endauth   
      @endif
-    <ul class="buttonhh">
-        <li class="AN1"><a href="#">Accueil</a></li>
-        <li class="AN2"><a href="#">À propos</a></li>
-        <li class="AN3"><a href="#">Contact</a></li>
-        <li class="AN4"><a href="#"></a></li>
+     <ul class="buttonhh">
+        <li class="AN1"><a href="" onclick="scrollByAmount(1)">Accueil</a></li>
+        <li class="AN2"><a href="" onclick="scrollByAmount(1650)">À propos</a></li>
+        <li class="AN3"><a href="" onclick="scrollByAmount(2400)">Contact</a></li>
     </ul>
+    
+    <script>
+    function scrollByAmount(pixels) {
+        event.preventDefault(); // Empêche le comportement par défaut du lien
+        window.scrollBy({
+            top: pixels,
+            behavior: 'smooth' // Défilement fluide
+        });
+    }
+    </script>
 </div>

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -64,6 +65,34 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function etudiant()
+    {
+        return $this->hasOne(Etudiant::class, 'utilisateur_id');
+    }
+    public function pfeRecruteur()
+{
+    return $this->hasOne(PFERecruteur::class, 'utilisateur_id');
+}
+
+    public function mesOffres()
+{
+    $user = Auth::user();
+    
+    // Vérification en une ligne avec opérateur null safe (PHP 8.0+)
+    $offres = $user->pfeRecruteur?->offres ?? collect();
+    
+    return view('offres.index', compact('offres'));
+}
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'utilisateur_id');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'utilisateur_id');
+    }
     public static function countEtudiants()
     {
         return self::where('role', 'etudiant')->count();
@@ -78,4 +107,8 @@ class User extends Authenticatable
     {
         return self::where('role', 'entreprise')->where('is_valid', false)->count();
     }
+    public function isEtudiant()
+{
+    return $this->role === 'etudiant';
+}
 }

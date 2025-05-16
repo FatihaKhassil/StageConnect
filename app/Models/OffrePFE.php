@@ -18,8 +18,85 @@ class OffrePFE extends Model
         'specialite',
         'lieu',
         'duree',
+        'statut',
     ];
-
+    public static $durees = [
+        1 => "1 mois",
+        2 => "2 mois", 
+        3 => "3 mois",
+        4 => "4 mois",
+        5 => "5 mois",
+        6 => "6 mois",
+        7 => "7 mois"
+    ];
+    public static $villes = [
+        'Casablanca',
+        'Rabat',
+        'Marrakech',
+        'Tanger',
+        'Fès',
+        'Agadir',
+        'Meknès',
+        'Oujda',
+        'Kénitra',
+        'Tétouan',
+        'Safi',
+        'El Jadida',
+        'Béni Mellal',
+        'Nador'
+    ];
+    public static $domaines = [
+        'Informatique',
+        'Génie Civil',
+        'Mécanique',
+        'Électrique',
+        'Commerce',
+        'Finance',
+        'Marketing',
+        'Ressources Humaines',
+        'Biologie',
+        'Chimie',
+        'Architecture',
+        'Design'
+    ];
+    public static $specialites = [
+        'Informatique' => [
+            'Développement Web',
+            'Intelligence Artificielle',
+            'Réseaux et Sécurité',
+            'Cloud Computing',
+            'Data Science',
+            'Mobile Development'
+        ],
+        'Génie Civil' => [
+            'BTP',
+            'Urbanisme',
+            'Géotechnique',
+            'Structures',
+            'Routes et Ponts'
+        ],
+        'Mécanique' => [
+            'Automobile',
+            'Aéronautique',
+            'Robotique',
+            'Énergétique',
+            'Production Industrielle'
+        ],
+        'Électrique' => [
+            'Électronique',
+            'Automatisme',
+            'Énergies Renouvelables',
+            'Smart Grids',
+            'Télécommunications'
+        ],
+        'Commerce' => [
+            'Commerce International',
+            'E-commerce',
+            'Logistique',
+            'Achat et Approvisionnement',
+            'Vente et Distribution'
+        ],
+    ];
     public function recruteur()
     {
         return $this->belongsTo(PFERecruteur::class, 'id_PFERecruteur');
@@ -30,10 +107,6 @@ class OffrePFE extends Model
         return $this->hasMany(Candidature::class, 'id_offre');
     }
 
-    public function ajouterCommentaire($commentaire)
-    {
-        // Logique pour ajouter un commentaire
-    }
 
     public function modifier($data)
     {
@@ -45,5 +118,9 @@ class OffrePFE extends Model
     {
         // Logique pour supprimer l'offre
         return $this->delete();
+    }
+    public function estValidee()
+    {
+        return $this->statut === 'validee';
     }
 }

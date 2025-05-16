@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
    @include('admin.css')
+   <style type="text/css">
+   </style>
   </head>
   <body>
     <div class="container-scroller">
@@ -10,9 +12,15 @@
       <!-- partial -->
       @include('admin.layouts.navbar')
         <!-- partial -->
-        @include('admin.body')
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    @include('admin.script')
-  </body>
+        <div class="main-panel">
+          <div class="content-wrapper">
+              @yield('content') <!-- Ici sera injecté le contenu des vues enfants -->
+          </div>
+      </div>
+  </div>
+  <!-- Inclure les scripts communs -->
+  @include('admin.script')
+    
+  </div>
+  </body>
 </html>

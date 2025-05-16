@@ -12,9 +12,15 @@
       <!-- partial -->
       @include('entreprise.layouts.navbar')
         <!-- partial -->
-        
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    @include('admin.script')
+        <div class="main-panel">
+          <div class="content-wrapper">
+              @yield('content') <!-- Ici sera injecté le contenu des vues enfants -->
+          </div>
+      </div>
+  </div>
+  <!-- Inclure les scripts communs -->
+  @include('admin.script')
+    
+  </div>
   </body>
 </html>

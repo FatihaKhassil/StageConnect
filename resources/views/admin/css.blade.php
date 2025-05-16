@@ -1,6 +1,6 @@
 
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <meta charset="utf-8">4
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>StageConnect</title>
     <!-- plugins:css -->
@@ -16,6 +16,6 @@
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
-    <link rel="stylesheet" href="admin/assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="photo/LOGO.png" />
+    <link rel="shortcut icon" href="{{ asset('photo/LOGO.png') }}" />   

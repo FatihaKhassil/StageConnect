@@ -1,72 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-   @include('admin.css')
-   <style type="text/css">
-   </style>
-  </head>
-  <body>
-    <div class="container-scroller">
-      <!-- partial:partials/_sidebar.html -->
-      @include('admin.layouts.sidebar')
-      <!-- partial -->
-      @include('admin.layouts.navbar')
-        <!-- partial -->
-        <div class="min-h-screen bg-black-100 flex items-center justify-center  pb-12"> <!-- Ajout de pt-12 pour décaler vers le bas -->
-            <div class="w-full 50-w-lg bg-white rounded-lg shadow-md p-8"> <!-- Augmentation de la largeur avec max-w-lg -->
-                @if(session('success'))
-                     <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-                     {{ session('success') }}
-            </div>
-               @endif
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Ajouter un utilisateur</h2>
-                
-                <form method="POST" action="{{ route('admin.users.store') }}" class="space-y-5">
-                    @csrf
-        
-                    <div>
-                        <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom et prénom :</label>
-                        <input id="nom" class="w-full px-4 py-2 border text-gray-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="text" name="nom" :value="old('nom')" required autofocus autocomplete="nom" />
-                    </div>
-        
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email :</label>
-                        <input id="email" class="w-full px-4 py-2 border text-gray-700  rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="email" name="email" :value="old('email')" required autocomplete="username" />
-                    </div>
-                    
-                    <div>
-                        <label for="role" class="block text-sm font-medium text-gray-700 mb-1">Vous êtes :</label>
-                        <select id="role" name="role" class="w-full px-4 py-2 border text-gray-700  rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">-- Sélectionnez un rôle --</option>
-                            <option value="entreprise">Entreprise</option>
-                            <option value="etudiant">Étudiant(e)</option>
-                        </select>
-                    </div>
-        
-                    <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mot de passe :</label>
-                        <input id="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="password" name="password" required autocomplete="new-password" />
-                    </div>
-        
-                    <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Confirmer le mot de passe :</label>
-                        <input id="password_confirmation" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" type="password" name="password_confirmation" required autocomplete="new-password" />
-                    </div>
-            
-                    <div class="flex items-center justify-between pt-4">
-                        <a class="text-sm text-indigo-600 hover:text-indigo-500" href="{{ route('login') }}">
-                            Déjà inscrit?
-                        </a>
-            
-                        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            ENREGISTRER
-                        </button>
-                    </div>
-                </form>
-            </div>
+@extends('admin.home')
+
+@section('content')
+<div class="container py-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="fas fa-user-plus mr-2"></i>Ajouter un utilisateur
+            </h4>
         </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    @include('admin.script')
-  </body>
-</html>
+
+        <div class="card-body">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('admin.users.store') }}">
+                @csrf
+
+                <!-- Nom -->
+                <div class="form-group">
+                    <label for="nom" class="font-weight-bold">Nom et prénom *</label>
+                    <input id="nom" type="text" name="nom" value="{{ old('nom') }}" 
+                           class="form-control @error('nom') is-invalid @enderror"
+                           style="color: white; background-color: #2c2c2c;" required autofocus>
+                    @error('nom')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email" class="font-weight-bold">Email *</label>
+                    <input id="email" type="email" name="email" value="{{ old('email') }}"
+                           class="form-control @error('email') is-invalid @enderror"
+                           style="color: white; background-color: #2c2c2c;" required>
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Rôle -->
+                <div class="form-group">
+                    <label for="role" class="font-weight-bold">Vous êtes *</label>
+                    <select id="role" name="role"
+                            class="form-control custom-select @error('role') is-invalid @enderror"
+                            required>
+                        <option value="">-- Sélectionnez un rôle --</option>
+                        <option value="entreprise" {{ old('role') == 'entreprise' ? 'selected' : '' }}>Entreprise</option>
+                        <option value="etudiant" {{ old('role') == 'etudiant' ? 'selected' : '' }}>Étudiant(e)</option>
+                    </select>
+                    @error('role')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Mot de passe -->
+                <div class="form-group">
+                    <label for="password" class="font-weight-bold">Mot de passe *</label>
+                    <input id="password" type="password" name="password"
+                           class="form-control @error('password') is-invalid @enderror"
+                           style="color: white; background-color: #2c2c2c;" required>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Confirmation du mot de passe -->
+                <div class="form-group">
+                    <label for="password_confirmation" class="font-weight-bold">Confirmer le mot de passe *</label>
+                    <input id="password_confirmation" type="password" name="password_confirmation"
+                           class="form-control"
+                           style="color: white; background-color: #2c2c2c;" required>
+                </div>
+
+                <!-- Boutons -->
+                <div class="form-group text-right">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="fas fa-save mr-2"></i>Enregistrer
+                    </button>
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary ml-2">
+                        <i class="fas fa-times mr-2"></i>Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    select.custom-select option {
+        color: #e9e3e3 !important;
+        font-weight: normal !important;
+    }
+    
+    select.custom-select {
+        color: #acabab !important;
+    }
+</style>
+@endsection

@@ -15,6 +15,7 @@ class Candidature extends Model
         'id_etudiant',
         'id_offre',
         'statut',
+        'cv_path',
     ];
 
     public function etudiant()
