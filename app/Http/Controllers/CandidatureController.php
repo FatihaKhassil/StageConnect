@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Candidature;
 use App\Notifications\CandidatureStatusUpdated;
 use App\Models\OffrePFE;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class CandidatureController extends Controller
 {
@@ -17,32 +19,51 @@ class CandidatureController extends Controller
             'cv' => 'required|file|mimes:pdf|max:2048',
         ]);
 
-        $path = $request->file('cv')->store('cvs');
-
-        Candidature::create([
-            'etudiant_id' => Auth::id(),
-            'offre_pfe_id' => $offre->id,
-            'cv_path' => $path,
+        $user = Auth::user();
+        $data = [
+            'id_offre' => $offre->id,
+            'cv_path' => $request->file('cv')->store('cvs', 'public'),
             'statut' => 'en_attente'
-        ]);
+        ];
 
-        return back()->with('success', 'Candidature envoyée');
+        if ($user->etudiant) {
+            $data['id_etudiant'] = $user->etudiant->id;
+        } elseif ($user->recruteur) {
+            abort(403, 'Les recruteurs ne peuvent pas postuler');
+        } elseif ($user->isAdmin()) {
+            abort(403, 'Les administrateurs ne peuvent pas postuler');
+        }
+
+        Candidature::create($data);
+
+        return back()->with('success', 'Candidature envoyée avec succès!');
     }
 
     public function mesCandidatures()
-
     {
-        $candidatures = Auth::user()->etudiant->candidatures()->with('offre')->get();
-        $user = Auth::user();
-        return view('etudiant.candidatures', compact('candidatures','user'));
+    $candidatures = Auth::user()->etudiant
+        ->candidatures()
+        ->with(['offre.recruteur']) // Retirez .entreprise
+        ->latest()
+        ->paginate(10);
+
+    return view('etudiant.candidatures', [
+        'candidatures' => $candidatures,
+        'user' => Auth::user()
+    ]);
     }
 
     public function gererCandidatures(OffrePFE $offre)
     {
-        $candidatures = $offre->candidatures()->with('etudiant')->get();
-        return view('entreprise.candidatures', compact('candidatures', 'offre'));
+        Gate::authorize('manage-candidatures', $offre);
+
+        $candidatures = $offre->candidatures()
+            ->with(['etudiant.user'])
+            ->latest()
+            ->paginate(10);
+
+        return view('entreprise.candidatures.index', compact('candidatures', 'offre'));
     }
-    // Dans CandidatureController.php
 
     public function enAttente(Request $request)
     {
@@ -60,43 +81,57 @@ class CandidatureController extends Controller
     }
     
     private function getCandidaturesByStatut($statut, Request $request)
-{
-    $query = Candidature::with(['etudiant.user', 'offre.recruteur.entreprise'])
-                ->where('statut', $statut);
+    {
+        $query = Candidature::with(['etudiant.utilisateur', 'offre.recruteur'])
+            ->where('statut', $statut);
 
-    // Filtre par nom
-    if ($request->filled('nom')) {
-        $query->whereHas('etudiant.user', function($q) use ($request) {
-            $q->where('name', 'like', '%'.$request->nom.'%');
-        });
+        if ($request->filled('nom')) {
+            $query->whereHas('etudiant.utilisateur', function($q) use ($request) {
+                $q->where('name', 'like', '%'.$request->nom.'%');
+            });
+        }
+
+        $candidatures = $query->latest()->paginate(10);
+
+        return view("entreprise.candidatures.$statut", [
+            'candidatures' => $candidatures,
+            'statut' => $statut,
+            'count' => $candidatures->total(),
+            'user' => Auth::user()
+        ]);
     }
 
-    $candidatures = $query->latest()->paginate(10);
+    public function updateStatut(Request $request, Candidature $candidature)
+   {
+    // Autorisation via la policy
+    
+    Gate::authorize('update', $candidature);
 
-    return view("entreprise.candidatures.$statut", [
-        'candidatures' => $candidatures,
-        'statut' => $statut,
-        'count' => $candidatures->total(),
-        'user' => Auth::user()
-    ]);
-}
-
-public function updateStatut(Request $request, Candidature $candidature)
-{
+    // Validation
     $request->validate([
         'statut' => 'required|in:acceptee,rejetee',
         'feedback' => 'nullable|string|max:500'
     ]);
 
+    // Mise à jour de la candidature
     $candidature->update([
         'statut' => $request->statut,
         'feedback' => $request->feedback
     ]);
 
-    // Envoyer une notification à l'étudiant
-    $candidature->etudiant->user->notify(new CandidatureStatusUpdated($candidature));
 
     return back()->with('success', 'Statut mis à jour avec succès');
-}
+   }
 
+
+    public function showCV(Candidature $candidature)
+    {
+        Gate::authorize('view-cv', $candidature);
+        dd($candidature->cv_path, Storage::disk('public')->exists($candidature->cv_path));
+        if (!Storage::disk('public')->exists($candidature->cv_path)) {
+            abort(404);
+        }
+
+        return Storage::disk('public')->response($candidature->cv_path);
+    }
 }

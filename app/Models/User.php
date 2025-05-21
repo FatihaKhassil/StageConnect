@@ -70,9 +70,11 @@ class User extends Authenticatable
         return $this->hasOne(Etudiant::class, 'utilisateur_id');
     }
     public function pfeRecruteur()
-{
+    {
     return $this->hasOne(PFERecruteur::class, 'utilisateur_id');
-}
+
+    }
+    
 
     public function mesOffres()
 {
@@ -110,5 +112,13 @@ class User extends Authenticatable
     public function isEtudiant()
 {
     return $this->role === 'etudiant';
+}
+public function isRecruteur()
+{
+    return $this->recruteur !== null;
+}
+public function isAdmin()
+{
+    return $this->admin !== null;
 }
 }

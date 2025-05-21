@@ -38,6 +38,10 @@ class Etudiant extends Model
         // Récupérer toutes les candidatures de l'étudiant
         return $this->candidatures;
     }
+    public function aPostule($offreId)
+{
+    return $this->candidatures()->where('id_offre', $offreId)->exists();
+}
     public function filtrerOffres($criteres)
     {
         // Logique pour filtrer les offres selon certains critères

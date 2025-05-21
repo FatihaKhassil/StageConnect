@@ -34,7 +34,7 @@
                                 <tbody>
                                     @foreach($candidatures as $candidature)
                                     <tr>
-                                        <td>{{ $candidature->etudiant->user->name }}</td>
+                                        <td>{{ $candidature->etudiant->utilisateur->nom }}</td>
                                         <td>{{ $candidature->etudiant->user->email }}</td>
                                         <td>
                                             <a href="{{ Storage::url($candidature->cv_path) }}" 

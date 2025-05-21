@@ -24,7 +24,7 @@
         <span class="nav-link">Navigation</span>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="{{route('etudiant.index')}}">
+        <a class="nav-link" href="{{ route('offres.disponibles') }}">
           <span class="menu-icon">
             <i class="mdi mdi-speedometer"></i>
           </span>
@@ -32,7 +32,7 @@
         </a>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="{{ route('mes-candidatures') }}">
+        <a class="nav-link" href="{{ route('etudiant.mes-candidatures') }}">
             <span class="menu-icon">
                 <i class="mdi mdi-laptop"></i>
             </span>

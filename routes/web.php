@@ -13,6 +13,8 @@ route::get('/',[HomeController::class,'index']);
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 });
+Route::post('/offres/{offre}/postuler', [CandidatureController::class, 'postuler'])
+    ->name('postuler');
 route::get('/redirect',[HomeController::class,'redirect']);
 Route::get('/offres', [OffreController::class, 'index'])->name('offres.index');
 //Route::get('/offres/{offre}', [OffreController::class, 'show'])->name('offres.show');
@@ -39,6 +41,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/offres/{offre}/rejeter', [AdminController::class, 'rejeter'])->name('offres.rejeter');
 });
 //entreprises
+    Route::get('entreprises/offres/{offre}', [OffreController::class, 'show'])->name('offres.show');
     Route::get('/mes-offres', [OffreController::class, 'mesOffres'])->name('mes-offres');
     Route::get('/offres/create', [OffreController::class, 'create'])->name('offres.create');
     Route::post('/offres', [OffreController::class, 'store'])->name('offres.store');
@@ -60,8 +63,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
          
     // Mise à jour statut
     Route::post('/candidatures/{candidature}/update-statut', [CandidatureController::class, 'updateStatut'])
-         ->name('entreprise.candidatures.update-statut');
+         ->name('entreprise.candidatures.updateStatut');
 // Pour les étudiants
     Route::post('/offres/{offre}/postuler', [CandidatureController::class, 'postuler'])->name('postuler');
-    Route::get('/mes-candidatures', [CandidatureController::class, 'mesCandidatures'])->name('mes-candidatures');
-    Route::get('/offres-disponibles', [OffreController::class, 'index'])->name('offres.disponibles');
+    Route::get('/offres-disponibles', [OffreController::class, 'indexEtudiant'])->name('offres.disponibles');
+    Route::get('/offres/mes_candidatures', [candidatureController::class, 'mesCandidatures'])->name('etudiant.mes-candidatures');
+    Route::get('/offres/{offre}', [OffreController::class, 'showEtudiant'])->name('etudiant.offres.show');
+    Route::get('/candidatures/{id}/cv', [CandidatureController::class, 'showCV'])->name('candidatures.cv');

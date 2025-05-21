@@ -40,8 +40,8 @@
                       <tbody>
                           @foreach($candidatures as $candidature)
                           <tr>
-                              <td>{{ $candidature->etudiant->user->name }}</td>
-                              <td>{{ $candidature->etudiant->user->email }}</td>
+                              <td>{{ $candidature->etudiant->utilisateur->nom }}</td>
+                              <td>{{ $candidature->etudiant->utilisateur->email }}</td>
                               <td>
                                   <a href="{{ Storage::url($candidature->cv_path) }}" 
                                      target="_blank"
@@ -88,7 +88,7 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                          <p>Vous êtes sur le point de rejeter la candidature de <strong>{{ $candidature->etudiant->user->name }}</strong>.</p>
+                          <p>Vous êtes sur le point de rejeter la candidature de <strong>{{ $candidature->etudiant->utilisateur->nom }}</strong>.</p>
                           <div class="mb-3">
                               <label for="feedback{{ $candidature->id }}" class="form-label">Feedback (optionnel)</label>
                               <textarea class="form-control" id="feedback{{ $candidature->id }}" name="feedback" rows="3" placeholder="Raison du rejet..."></textarea>

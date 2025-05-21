@@ -1,4 +1,5 @@
-@extends('entreprise.home')
+@extends('etudiant.home')
+
 @section('content')
 <div class="container-fluid">
     <div class="row mb-4">
@@ -111,21 +112,9 @@
                                     <p class="card-text">{{ Str::limit($offre->description, 150) }}</p>
                                 </div>
                                 <div class="card-footer bg-white d-flex justify-content-between align-items-center">
-                                    @auth
-                                        @if((auth()->user()->etudiant && auth()->user()->etudiant->aPostule($offre->id)) || 
-                                            (auth()->user()->recruteur && auth()->user()->recruteur->aPostule($offre->id)))
-                                            <span class="badge badge-info">Déjà postulé</span>
-                                        @else
-                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#postulerModal{{ $offre->id }}">
-                                                Postuler
-                                            </button>
-                                        @endif
-                                    @else
-                                        <a href="{{ route('login') }}" class="btn btn-sm btn-primary">
-                                            Connectez-vous pour postuler
-                                        </a>
-                                    @endauth
-                                    <a href="{{ route('offres.show', $offre->id) }}" class="btn btn-sm btn-outline-secondary text-dark">
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#postulerModal{{ $offre->id }}">
+                                                    Postuler</button>
+                                    <a href="{{ route('etudiant.offres.show', $offre->id) }}" class="btn btn-sm btn-outline-secondary text-dark">
                                         Voir détails
                                     </a>
                                 </div>

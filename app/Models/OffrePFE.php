@@ -19,6 +19,7 @@ class OffrePFE extends Model
         'lieu',
         'duree',
         'statut',
+        'description',
     ];
     public static $durees = [
         1 => "1 mois",
@@ -105,6 +106,27 @@ class OffrePFE extends Model
     public function candidatures()
     {
         return $this->hasMany(Candidature::class, 'id_offre');
+    }
+    public static function getAllSpecialites()
+    {
+    $allSpecialites = [];
+    foreach (self::$specialites as $domaineSpecialites) {
+        $allSpecialites = array_merge($allSpecialites, $domaineSpecialites);
+    }
+    return array_unique($allSpecialites);
+    }
+    public static function getSpecialitesByDomaine($domaine = null)
+    {
+    if (!$domaine) {
+        // Retourne toutes les spécialités si aucun domaine n'est spécifié
+        $all = [];
+        foreach (self::$specialites as $specs) {
+            $all = array_merge($all, $specs);
+        }
+        return array_unique($all);
+    }
+    
+    return self::$specialites[$domaine] ?? [];
     }
 
 
