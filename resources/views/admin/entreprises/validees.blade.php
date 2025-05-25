@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    @include('admin.css')
-    <style type="text/css">
-        /* Tu peux mettre ton style ici si nécessaire */
-        #ui-basic {
-            margin-top: 4cm;
-        }
-    </style>
-</head>
-<body>
-    <div class="container-scroller">
-        <!-- partial:partials/_sidebar.html -->
-        @include('admin.layouts.sidebar')
-        <!-- partial -->
-        @include('admin.layouts.navbar')
-        <!-- partial -->
-
+ @extends('admin.home')
+    @section('content')
         <div class="container" style="margin-top: 100px;">
             {{-- Bloc collapsible --}}
             <div id="ui-basic" class="collapse">
@@ -60,8 +43,4 @@
             </table>
         </div>
     </div>
-
-    <!-- plugins:js -->
-    @include('admin.script')
-</body>
-</html>
+@endsection

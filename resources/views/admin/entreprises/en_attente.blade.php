@@ -1,29 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-   @include('admin.css')
-   <style type="text/css">
-   </style>
-   @section('content')
-   <style>
-       #ui-basic {
-           margin-top: 4cm;
-       }
-   </style>
-
-   <div id="ui-basic">
-       <!-- Contenu de l'élément -->
-   </div>
-@endsection
-  </head>
-  <body>
-    <div class="container-scroller">
-      <!-- partial:partials/_sidebar.html -->
-      @include('admin.layouts.sidebar')
-      <!-- partial -->
-      @include('admin.layouts.navbar')
-        <!-- partial -->
-        
+@extends('admin.home')
+    @section('content')
         <div class="container" style="margin-top: 100px;">
           {{-- Entreprises en attente --}}
           <h2>Entreprises en attente ({{ $en_attente->count() }})</h2>
@@ -67,9 +43,4 @@
                     </tbody>
           </table>
       </div>
-      
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    @include('admin.script')
-  </body>
-</html>
+@endsection

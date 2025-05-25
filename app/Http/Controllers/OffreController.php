@@ -90,6 +90,46 @@ public function indexEtudiant(Request $request)
         'filters' => $request->only(['domaine', 'specialite', 'lieu', 'duree'])
     ]);
 }
+public function indexAdmin(Request $request)
+{
+    $query = OffrePFE::query()->where('statut', 'validee');
+
+    // Appliquer les filtres
+    if ($request->has('domaine')) {
+        $query->where('domaine', 'like', '%'.$request->domaine.'%');
+    }
+
+    if ($request->has('specialite')) {
+        $query->where('specialite', 'like', '%'.$request->specialite.'%');
+    }
+
+    if ($request->has('lieu')) {
+        $query->where('lieu', 'like', '%'.$request->lieu.'%');
+    }
+    if ($request->filled('duree')) {
+        $query->where('duree', (int)$request->duree); // Conversion explicite en entier
+    }
+
+    $offres = $query->latest()->paginate(10);
+
+    // Message si aucun résultat
+    if ($offres->isEmpty()) {
+        $message = $request->anyFilled(['domaine', 'specialite', 'lieu', 'duree'])
+            ? "Aucune offre ne correspond à vos critères de recherche"
+            : "Aucune offre disponible actuellement";
+        
+        session()->now('info', $message);
+    }
+
+    return view('admin.offres.index', [
+        'offres' => $offres,  // Liste paginée des offres
+        'villes' => OffrePFE::$villes,
+        'domaines' => OffrePFE::$domaines,
+        'durees' => OffrePFE::$durees,
+        'user' => Auth::user(),
+        'filters' => $request->only(['domaine', 'specialite', 'lieu', 'duree'])
+    ]);
+}
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -148,7 +188,7 @@ public function create()
     public function show(OffrePFE $offre)
 {
      // Charge seulement les relations nécessaires
-    $offre->load(['recruteur', 'candidatures.etudiant.user']);
+    $offre->load(['recruteur', 'candidatures.etudiant.utilisateur']);
     
     return view('entreprise.offres.show', [
         'offre' => $offre,
@@ -158,12 +198,23 @@ public function create()
 public function showEtudiant(OffrePFE $offre)
 {
      // Charge seulement les relations nécessaires
-    $offre->load(['recruteur', 'candidatures.etudiant.user']);
+    $offre->load(['recruteur', 'candidatures.etudiant.utilisateur']);
     
     return view('etudiant.offres.show', [
         'offre' => $offre,
         'user' => Auth::user(),
     ]);
 }
+public function showAdmin(OffrePFE $offre)
+{
+     // Charge seulement les relations nécessaires
+    $offre->load(['recruteur', 'candidatures.admin.utilisateur']);
+    
+    return view('admin.offres.show', [
+        'offre' => $offre,
+        'user' => Auth::user(),
+    ]);
+}
+
 
 }

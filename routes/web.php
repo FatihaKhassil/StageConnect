@@ -20,9 +20,13 @@ Route::get('/offres', [OffreController::class, 'index'])->name('offres.index');
 //Route::get('/offres/{offre}', [OffreController::class, 'show'])->name('offres.show');
 // Pour les admins
 Route::middleware(['auth', 'admin'])->group(function () {
+     //dashbord
+Route::get('/offres_disponibles_admin', [OffreController::class, 'indexAdmin'])->name('offres.disponibles.admin');
+Route::get('/admin/offres/{offre}', [OffreController::class, 'showAdmin'])->name('admin.offres.show');
+
     Route::post('/offres/{offre}/valider', [OffreController::class, 'validerOffre'])->name('offres.valider');
     route::get('/admin_users',[AdminController::class,'index'])->name('admin.users.index');
-    Route::get('/admin/users/{id}/edit', [AdminController::class, 'edit'])->name('admin.users.edit');
+    Route::get('/admin_users_{id}_edit', [AdminController::class, 'edit'])->name('admin.users.edit');
     route::put('/admin_users_update',[AdminController::class,'update'])->name('admin.users.update');
     route::post('/admin_users_store',[AdminController::class,'store'])->name('admin.users.store');
     route::get('/admin_users_create',[AdminController::class,'create'])->name('admin.users.create');
@@ -45,6 +49,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/mes-offres', [OffreController::class, 'mesOffres'])->name('mes-offres');
     Route::get('/offres/create', [OffreController::class, 'create'])->name('offres.create');
     Route::post('/offres', [OffreController::class, 'store'])->name('offres.store');
+    //la route principale
     Route::get('/offres_entreprises', [PFERecruteurController::class, 'index']) ->name('entreprise.offres.index');
          //entreprise .offres.index dashboard
     Route::get('/offres', [OffreController::class, 'index'])->name('entreprise.offres.index');

@@ -1,42 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    @include('admin.css')
-    <style>
-        #ui-basic {
-            margin-top: 4cm;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .edit-link {
-            margin-right: 10px;
-        }
-    </style>
-  </head>
-  <body>
-    <div class="container-scroller">
-      <!-- Sidebar -->
-      @include('admin.layouts.sidebar')
-      <!-- Navbar -->
-      @include('admin.layouts.navbar')
-
-      <!-- Contenu principal -->
+@extends('admin.home')
+     @section('content')
       <div class="container" id="ui-basic">
         <h2>Liste des utilisateurs</h2>
         <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">Ajouter</a>
 
-        <table class="table">
+        <table class="table" >
           <thead>
             <tr>
               <th style="width: 40%">Email</th>
@@ -50,7 +18,7 @@
               <tr>
                 <td>
                   <div class="user-info">
-                    <img src="{{ $user->avatar_url ?? '/assets/default-avatar.png' }}" alt="{{ $user->email }}" class="avatar">
+                   
                     <div class="user-email">{{ $user->email }}</div>
                   </div>
                 </td>
@@ -69,8 +37,4 @@
           </tbody>
         </table>
       </div>
-
-    </div>
-    @include('admin.script')
-  </body>
-</html>
+@endsection

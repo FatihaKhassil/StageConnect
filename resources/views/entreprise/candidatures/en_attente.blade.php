@@ -26,8 +26,8 @@
                   <button type="submit" class="btn btn-primary">Rechercher</button>
               </form>
 
-              <div class="table-responsive">
-                  <table class="table">
+              <div class="table-responsive text-light">
+                  <table class="table text-light">
                       <thead>
                           <tr>
                               <th>Étudiant</th>
@@ -59,12 +59,13 @@
                                       </button>
                                   </form>
 
-                                  <button type="button" 
-                                          class="btn btn-sm btn-danger" 
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#rejetModal{{ $candidature->id }}">
-                                      <i class="fas fa-times"></i> Rejeter
-                                  </button>
+                                  <form action="{{ route('entreprise.candidatures.updateStatut', $candidature) }}" method="POST" style="display:inline;">
+                                      @csrf
+                                      <input type="hidden" name="statut" value="rejetee">
+                                      <button type="submit" class="btn btn-sm btn-danger">
+                                          <i class="fas fa-check"></i> Rejeter
+                                      </button>
+                                  </form>     
                               </td>
                           </tr>
                           @endforeach
